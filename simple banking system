@@ -1,0 +1,83 @@
+import java.io.*;
+
+class Account {
+    private String name;
+    private int balance;
+    private String accountNumber;
+
+    public Account(String name, int balance, String accountNumber) {
+        this.name = name;
+        this.balance = balance;
+        this.accountNumber = accountNumber;
+    }
+
+    public void deposit(int amount) {
+        balance += amount;
+    }
+
+    public void withdraw(int amount) {
+        if (amount <= balance) {
+            balance -= amount;
+        } else {
+            System.out.println("Insufficient funds");
+        }
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Account account = null;
+
+        while (true) {
+            if (account == null) {
+                System.out.println("Enter your name: ");
+                String name = reader.readLine();
+
+                System.out.println("Enter initial balance: ");
+                int balance = Integer.parseInt(reader.readLine());
+
+                System.out.println("Enter account number: ");
+                String accountNumber = reader.readLine();
+
+                account = new Account(name, balance, accountNumber);
+            }
+
+            System.out.println("\n1. Deposit\n2. Withdraw\n3. Check Balance\n4. Exit");
+            int choice = Integer.parseInt(reader.readLine());
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter amount to deposit: ");
+                    int depositAmount = Integer.parseInt(reader.readLine());
+                    account.deposit(depositAmount);
+                    break;
+                case 2:
+                    System.out.println("Enter amount to withdraw: ");
+                    int withdrawAmount = Integer.parseInt(reader.readLine());
+                    account.withdraw(withdrawAmount);
+                    break;
+                case 3:
+                    System.out.println("Your balance is: " + account.getBalance());
+                    break;
+                case 4:
+                    System.out.println("Thank you for using our banking system!");
+                    return;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+}
